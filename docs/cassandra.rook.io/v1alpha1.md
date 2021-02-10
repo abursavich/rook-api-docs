@@ -60,7 +60,7 @@ ClusterSpec is the desired state for a Cassandra Cluster.
 
 | Field | Description | Type | Required |
 | ----- | ----------- | ---- | -------- |
-| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](../rook.io/v1#Annotations) | true |
+| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#Annotations) | true |
 | version | Version of Cassandra to use. | string | true |
 | repository | Repository to pull the image from. | *string | false |
 | mode | Mode selects an operating mode. | [ClusterMode](#clustermode) | false |
@@ -132,7 +132,7 @@ RackCondition is an observation about the state of a rack.
 | ---- | ----- | ----------- |
 | RackConditionTypeMemberLeaving | MemberLeaving |  |
 
-[Back to TOC](.md#table-of-contents)
+[Back to TOC](#table-of-contents)
 
 ## RackSpec
 
@@ -144,9 +144,9 @@ RackSpec is the desired state for a Cassandra Rack.
 | members | Members is the number of Cassandra instances in this rack. | int32 | true |
 | configMapName | User-provided ConfigMap applied to the specific statefulset. | *string | false |
 | jmxExporterConfigMapName | User-provided ConfigMap for jmx prometheus exporter | *string | false |
-| storage | Storage describes the underlying storage that Cassandra will consume. | [rookiov1.StorageScopeSpec](../rook.io/v1.md#StorageScopeSpec) | true |
-| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](../rook.io/v1.md#Annotations) | true |
-| placement | Placement describes restrictions for the nodes Cassandra is scheduled on. | *[rookiov1.Placement](../rook.io/v1.md#Placement) | false |
+| storage | Storage describes the underlying storage that Cassandra will consume. | [rookiov1.StorageScopeSpec](https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#StorageScopeSpec) | true |
+| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#Annotations) | true |
+| placement | Placement describes restrictions for the nodes Cassandra is scheduled on. | *[rookiov1.Placement](https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#Placement) | false |
 | resources | Resources the Cassandra Pods will use. | [corev1.ResourceRequirements](https://pkg.go.dev/k8s.io/api/core/v1#ResourceRequirements) | true |
 
 [Back to TOC](#table-of-contents)

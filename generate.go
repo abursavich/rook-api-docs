@@ -1,13 +1,10 @@
 package main
 
 import (
-	"bytes"
 	"fmt"
-	"io/ioutil"
 	"os"
 	"path"
 	"path/filepath"
-	"regexp"
 
 	"github.com/machinezone/configmapsecrets/pkg/genapi"
 	cassandrav1alpha1 "github.com/rook/rook/pkg/apis/cassandra.rook.io/v1alpha1"
@@ -20,10 +17,7 @@ import (
 	"k8s.io/apimachinery/pkg/runtime/schema"
 )
 
-var linkRE = regexp.MustCompile(`\(https://pkg.go.dev/github.com/rook/rook/pkg/apis/([^/]+)/([^/]+)#(.+)\)`)
-
 func main() {
-
 	var g errgroup.Group
 	for _, api := range []struct {
 		PackagePath  string
@@ -66,16 +60,6 @@ func main() {
 			if err != nil {
 				return err
 			}
-			buf := bytes.NewBuffer(nil)
-			err = genapi.WriteMarkdown(buf, pkg, genapi.WithScheme(scheme), genapi.WithGroupVersion(api.GroupVersion))
-			if err != nil {
-				return err
-			}
-			// Convert links
-			// from (https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#Annotations)
-			//   to (../rook.io/v1.md#Annotations)
-			data := linkRE.ReplaceAll(buf.Bytes(), []byte("(../$1/$2.md#$3)"))
-
 			filename := filepath.Join(
 				"docs",
 				path.Base(path.Dir(api.PackagePath)),
@@ -84,7 +68,12 @@ func main() {
 			if err := os.MkdirAll(filepath.Dir(filename), 0755); err != nil {
 				return err
 			}
-			return ioutil.WriteFile(filename, data, 0644)
+			file, err := os.Create(filename)
+			if err != nil {
+				return err
+			}
+			defer file.Close()
+			return genapi.WriteMarkdown(file, pkg, genapi.WithScheme(scheme), genapi.WithGroupVersion(api.GroupVersion))
 		})
 	}
 	if err := g.Wait(); err != nil {

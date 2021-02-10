@@ -70,7 +70,7 @@ NFSServerSpec represents the spec of NFS daemon
 
 | Field | Description | Type | Required |
 | ----- | ----------- | ---- | -------- |
-| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](../rook.io/v1#Annotations) | false |
+| annotations | The annotations-related configuration to add/set on each Pod related object. | [rookiov1.Annotations](https://pkg.go.dev/github.com/rook/rook/pkg/apis/rook.io/v1#Annotations) | false |
 | replicas | Replicas of the NFS daemon | int | false |
 | exports | The parameters to configure the NFS export | [][ExportsSpec](#exportsspec) | false |
 
@@ -111,4 +111,4 @@ ServerSpec represents the spec for configuring the NFS server
 | squash | This prevents the root users connected remotely from having root privileges Valid values are \"none\", \"rootid\", \"root\", and \"all\" | string | false |
 | allowedClients | The clients allowed to access the NFS export | [][AllowedClientsSpec](#allowedclientsspec) | false |
 
-[Back to TOC](.md#table-of-contents)
+[Back to TOC](#table-of-contents)
